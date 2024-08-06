@@ -5,7 +5,7 @@ use sqlx::FromRow;
 pub struct User {
     pub user_id: String,            // 唯一标识每个用户
     pub user_phone: String,         // 用户的登录名(手机号)
-    pub nickname: Option<String>,   // 昵称
+    pub nickname: String,           // 昵称
     pub password: String,           // 加密存储的用户密码
     pub email: Option<String>,      // 用户的联系邮箱
     pub registration_date: String,  // 用户注册的时间
@@ -15,4 +15,10 @@ pub struct User {
     pub bio: Option<String>,        // 用户的个人简介或签名
     pub avatar: Option<String>,     // 用户的头像链接
     pub gender: u8,                 // 用户性别 1：男性 ，2：女性，3：其他
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct CreateUserBody {
+    pub user_phone: String, // 用户的登录名(手机号)
+    pub password: String,   // 加密存储的用户密码
 }
