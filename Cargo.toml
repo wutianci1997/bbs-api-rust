@@ -13,3 +13,5 @@ tower = "0.4.13"
 serde_json = "1.0.122"
 uuid = { version = "1.10.0", features = ["v4", "fast-rng", "macro-diagnostics"] }
 ring = "0.17.8"
+sqlx = { version = "0.8", features = ["mysql", "runtime-tokio"] }
+sqlx-macros = { version = "0.8", features = ["derive"] }
