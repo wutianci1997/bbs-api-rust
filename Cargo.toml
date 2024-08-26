@@ -1,6 +1,6 @@
 [package]
-name = "bbs-api"
-version = "0.0.1"
+name = "bbs"
+version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -9,9 +9,9 @@ edition = "2021"
 tokio = { version = "1.39.2", features = ["full"] }
 serde = { version = "1.0.204", features = ["derive"] }
 axum = "0.7.5"
-tower = "0.4.13"
 serde_json = "1.0.122"
+tower = "0.4.13"
 uuid = { version = "1.10.0", features = ["v4", "fast-rng", "macro-diagnostics"] }
-ring = "0.17.8"
-sqlx = { version = "0.8", features = ["mysql", "runtime-tokio"] }
-sqlx-macros = { version = "0.8", features = ["derive"] }
+sqlx = { version = "0.8", features = [ "runtime-tokio","mysql","derive","macros","chrono"] }
+dotenv = "0.15.0"
+chrono = { version = "0.4", features = ["serde"] }

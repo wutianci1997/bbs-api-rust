@@ -1,19 +1,15 @@
-use axum::{
-    routing::{get, post},
-    Router,
-};
+use dotenv::dotenv;
+mod boards; // 版块管理
+mod categories; // 分类管理
+mod lib;
+mod posts; // 回复管理
+mod topics; // 帖子管理
+mod user_roles; // 用户角色管理
+mod user_roles_assignments; // 用户权限关系管理
+mod users; // 用户管理
 
-mod db_manager;
-mod env;
-mod password;
-mod user;
-
-#[tokio::main]
-async fn main() {
-    let app = Router::new()
-        .route("/user/:id", get(user::get_user))
-        .route("/create_user", post(user::post_user))
-        .route("/users", get(user::get_users));
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
-    axum::serve(listener, app).await.unwrap();
+fn main() {
+    // 加载环境变量
+    dotenv().ok();
+    println!("Hello, world!");
 }
