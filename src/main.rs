@@ -26,6 +26,7 @@ async fn main() {
         .route("/api/users/create", post(users::create))
         .route("/api/users/create_multiple", post(users::create_multiple))
         .route("/api/users/:user_phone", get(users::find_one))
+        .route("/api/users/filter", get(users::filter))
         .layer(ServiceBuilder::new().layer(TraceLayer::new_for_http()));
 
     axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())

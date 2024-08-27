@@ -1,4 +1,5 @@
 use axum::{http::StatusCode, Json};
+use sqlx::{MySql, Pool};
 use std::env;
 use time::{format_description, UtcOffset};
 use tracing_subscriber::{
@@ -9,31 +10,31 @@ use tracing_subscriber::{
 };
 
 #[derive(Debug)]
-pub enum Error {
+pub enum ApiError {
     Env(env::VarError),
     Sqlx(sqlx::Error),
     SerdeJson(serde_json::Error),
 }
 
-impl From<env::VarError> for Error {
+impl From<env::VarError> for ApiError {
     fn from(err: env::VarError) -> Self {
-        Error::Env(err)
+        ApiError::Env(err)
     }
 }
 
-impl From<sqlx::Error> for Error {
+impl From<sqlx::Error> for ApiError {
     fn from(err: sqlx::Error) -> Self {
-        Error::Sqlx(err)
+        ApiError::Sqlx(err)
     }
 }
 
-impl From<serde_json::Error> for Error {
+impl From<serde_json::Error> for ApiError {
     fn from(err: serde_json::Error) -> Self {
-        Error::SerdeJson(err)
+        ApiError::SerdeJson(err)
     }
 }
 
-pub type Result = (StatusCode, Json<serde_json::Value>);
+pub type ApiResult = (StatusCode, Json<serde_json::Value>);
 
 pub fn log() {
     let local_time = OffsetTime::new(
@@ -53,4 +54,10 @@ pub fn log() {
         .with(env_filter)
         .with(formatting_layer)
         .init();
+}
+
+pub async fn mysql_pool() -> Result<Pool<MySql>, ApiError> {
+    let url = std::env::var("DATABASE_URL")?;
+    let pool = sqlx::MySqlPool::connect(&url).await?;
+    Ok(pool)
 }
