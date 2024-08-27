@@ -1,5 +1,7 @@
 use std::env;
 
+use axum::{http::StatusCode, Json};
+
 pub enum Error {
     Env(env::VarError),
     Sqlx(sqlx::Error),
@@ -23,3 +25,5 @@ impl From<serde_json::Error> for Error {
         Error::SerdeJson(err)
     }
 }
+
+pub type Result = (StatusCode, Json<serde_json::Value>);
